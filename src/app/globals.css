@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+:root {
+  --font-inter: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  
+  /* Official Teknik Informatika ITERA Color Palette */
+  --if-navy-deep: #0D223A;
+  --if-navy: #133863;
+  --if-blue: #1F70C1;
+  --if-blue-light: #4D9EE8;
+  --if-blue-ice: #A6D2FA;
+  --if-blue-soft: #F0F7FD;
+  --if-gold: #C59938;
+  --if-gold-light: #FEFBF3;
+  
+  --bg-main: #F4F8FC;
+  --bg-surface: #FFFFFF;
+  --text-primary: #0F1D2E;
+  --text-secondary: #334A66;
+  --text-muted: #5C738F;
+  --border-subtle: #E1EAF2;
+  --border-strong: #CBD7E3;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-inter);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD7E3;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #99B2CB;
+}
+
+/* Markdown prose typography for academic reading */
+.prose-academic p {
+  margin-top: 1.15rem;
+  margin-bottom: 1.15rem;
+  color: #2D3E50;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.prose-academic strong {
+  color: #0D223A;
+  font-weight: 700;
+}
+
+.prose-academic ul {
+  list-style-type: disc;
+  margin-top: 0.85rem;
+  margin-bottom: 1rem;
+  padding-left: 1.6rem;
+  color: #2D3E50;
+}
+
+.prose-academic ol {
+  list-style-type: decimal;
+  margin-top: 0.85rem;
+  margin-bottom: 1rem;
+  padding-left: 1.6rem;
+  color: #2D3E50;
+}
+
+.prose-academic li {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  line-height: 1.65;
+}
+
+.prose-academic li > p {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.prose-academic hr {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-color: #E1EAF2;
+}
+
+/* Table styling */
+.prose-academic table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid #E1EAF2;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+}
+
+.prose-academic thead {
+  background-color: #F0F7FD;
+  border-bottom: 2px solid #CBD7E3;
+}
+
+.prose-academic th {
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  text-align: left;
+  color: #133863;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.prose-academic td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #EBF1F7;
+  color: #2D3E50;
+}
+
+.prose-academic tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.prose-academic tbody tr:hover {
+  background-color: #F8FBFE;
+}
+
+/* Inline code styling */
+.prose-academic :not(pre) > code {
+  background-color: #EBF3FA;
+  color: #133863;
+  font-weight: 600;
+  font-size: 0.875em;
+  padding: 0.18rem 0.45rem;
+  border-radius: 0.3rem;
+  border: 1px solid #D5E5F5;
+  font-family: var(--font-mono);
+}
+
+/* Custom Callout Box for [LATIHAN MANDIRI] */
+.callout-latihan {
+  border-left-width: 4px;
+  border-left-color: #C59938;
+}
+
+/* Print styling for students downloading/printing modules */
+@media print {
+  nav, aside, .no-print, header, footer, .copy-code-btn {
+    display: none !important;
+  }
+  main, article {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  pre {
+    border: 1px solid #ccc !important;
+    white-space: pre-wrap !important;
+    page-break-inside: avoid;
+  }
+}
