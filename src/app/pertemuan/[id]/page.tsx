@@ -91,7 +91,7 @@ export default async function ModuleDetailPage({ params }: PageProps) {
                 <Clock className="w-3.5 h-3.5 text-[#1F70C1]" />
                 <span>{moduleData.durasi}</span>
               </div>
-              <PrintButton />
+              <PrintButton moduleId={moduleData.id} />
             </div>
           </div>
 
