@@ -1,10 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, FileText, Home, X } from 'lucide-react';
+import { BookOpen, FileText, Home, X, Lock } from 'lucide-react';
 import type { ModuleMeta, ModuleHeading } from '@/lib/modules';
+import { useModuleLock } from './ModuleLockProvider';
+import { PasskeyModal } from './ModuleLock';
 
 interface SidebarProps {
   modules: ModuleMeta[];
@@ -20,6 +22,9 @@ export default function Sidebar({
   onCloseMobile,
 }: SidebarProps) {
   const pathname = usePathname();
+  const { isModuleLocked, isReady } = useModuleLock();
+  // Track modul mana yang sedang menunggu unlock (per-modul)
+  const [pendingModule, setPendingModule] = useState<{ id: number; title: string } | null>(null);
 
   // Find active module
   const currentSlugMatch = pathname.match(/\/pertemuan\/(\d+)/);
@@ -89,36 +94,68 @@ export default function Sidebar({
           <div className="space-y-1">
             {modules.map((mod) => {
               const isActive = activeSlug === String(mod.id);
+              const locked = isReady && isModuleLocked(mod.id, mod.minggu);
+
+              const itemContent = (
+                <>
+                  <span
+                    className={`inline-flex items-center justify-center w-5 h-5 rounded text-[11px] font-bold shrink-0 mt-0.5 ${isActive
+                        ? 'bg-[#4D9EE8] text-white'
+                        : locked
+                          ? 'bg-slate-200 text-slate-400'
+                          : 'bg-slate-100 text-slate-600 group-hover:bg-[#E1EAF2] group-hover:text-[#1F70C1]'
+                      }`}
+                  >
+                    {mod.id}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className={`text-[10px] uppercase font-bold tracking-wider ${isActive ? 'text-blue-200' : locked ? 'text-slate-400' : 'text-slate-600'}`}>
+                        Minggu {mod.minggu}
+                      </span>
+                      {locked && <Lock className="w-3 h-3 text-slate-400 shrink-0" />}
+                    </div>
+                    <p className={`line-clamp-2 leading-snug mt-0.5 ${isActive ? 'text-white' : locked ? 'text-slate-400' : 'text-slate-800'}`}>
+                      {mod.title}
+                    </p>
+                  </div>
+                </>
+              );
 
               return (
                 <div key={mod.id} className="space-y-1">
-                  <Link
-                    href={`/pertemuan/${mod.id}`}
-                    onClick={onCloseMobile}
-                    className={`group flex items-start gap-2.5 px-3 py-2.5 rounded-lg text-xs transition-all ${isActive
-                        ? 'bg-[#133863] text-white font-semibold shadow-xs ring-1 ring-[#1F70C1]'
-                        : 'text-slate-700 hover:bg-[#F0F7FD] hover:text-[#133863]'
-                      }`}
-                  >
-                    <span
-                      className={`inline-flex items-center justify-center w-5 h-5 rounded text-[11px] font-bold shrink-0 mt-0.5 ${isActive
-                          ? 'bg-[#4D9EE8] text-white'
-                          : 'bg-slate-100 text-slate-600 group-hover:bg-[#E1EAF2] group-hover:text-[#1F70C1]'
+                  {locked ? (
+                    <button
+                      onClick={() => setPendingModule({ id: mod.id, title: `Pertemuan ${mod.id}: ${mod.title}` })}
+                      className="group w-full relative flex items-start gap-2.5 px-3 py-2.5 rounded-lg text-xs cursor-pointer select-none overflow-hidden border border-slate-100 bg-slate-50 hover:border-[#A0BBDA] transition-all"
+                      title="Klik untuk memasukkan passkey"
+                    >
+                      {/* Konten item (blur sedikit) */}
+                      <div className="flex items-start gap-2.5 w-full opacity-60">
+                        {itemContent}
+                      </div>
+                      {/* Overlay kunci saat hover */}
+                      <div className="absolute inset-0 flex items-center justify-center gap-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(13,34,58,0.88) 0%, rgba(31,112,193,0.82) 100%)',
+                        }}
+                      >
+                        <Lock className="w-3.5 h-3.5 text-white" />
+                        <span className="text-white font-bold text-[11px]">Masukkan Passkey</span>
+                      </div>
+                    </button>
+                  ) : (
+                    <Link
+                      href={`/pertemuan/${mod.id}`}
+                      onClick={onCloseMobile}
+                      className={`group flex items-start gap-2.5 px-3 py-2.5 rounded-lg text-xs transition-all ${isActive
+                          ? 'bg-[#133863] text-white font-semibold shadow-xs ring-1 ring-[#1F70C1]'
+                          : 'text-slate-700 hover:bg-[#F0F7FD] hover:text-[#133863]'
                         }`}
                     >
-                      {mod.id}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <span className={`text-[10px] uppercase font-bold tracking-wider ${isActive ? 'text-blue-200' : 'text-slate-600'}`}>
-                          Minggu {mod.minggu}
-                        </span>
-                      </div>
-                      <p className={`line-clamp-2 leading-snug mt-0.5 ${isActive ? 'text-white' : 'text-slate-800'}`}>
-                        {mod.title}
-                      </p>
-                    </div>
-                  </Link>
+                      {itemContent}
+                    </Link>
+                  )}
 
                   {/* If active, show sub-headings */}
                   {isActive && currentHeadings.length > 0 && (
@@ -173,6 +210,15 @@ export default function Sidebar({
             {sidebarContent}
           </div>
         </div>
+      )}
+
+      {/* Passkey Modal — per modul */}
+      {pendingModule && (
+        <PasskeyModal
+          moduleId={pendingModule.id}
+          moduleTitle={pendingModule.title}
+          onClose={() => setPendingModule(null)}
+        />
       )}
     </>
   );

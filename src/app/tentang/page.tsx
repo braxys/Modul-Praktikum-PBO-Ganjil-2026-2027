@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
+import { getAllModules } from '@/lib/modules';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ModuleAccessControl from '@/components/ModuleAccessControl';
 import {
   FileText,
   ShieldAlert,
@@ -22,6 +24,7 @@ export const metadata = {
 };
 
 export default function TentangPage() {
+  const modules = getAllModules();
   const silabusItems = [
     {
       minggu: 1,
@@ -100,6 +103,12 @@ export default function TentangPage() {
               Panduan resmi pelaksanaan Praktikum Pemrograman Berorientasi Objek (PBO) Program Studi
               Teknik Informatika, Institut Teknologi Sumatera (ITERA) Semester Ganjil Tahun Akademik 2026/2027.
             </p>
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <ModuleAccessControl modules={modules} />
+              <span className="text-xs text-slate-500">
+                Pengaturan akses modul berlaku untuk semua pengunjung.
+              </span>
+            </div>
           </div>
 
           {/* Section 1: Silabus Pembelajaran */}

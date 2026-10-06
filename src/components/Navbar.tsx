@@ -31,42 +31,51 @@ export default function Navbar({ onToggleMobileSidebar }: NavbarProps) {
   return (
     <>
       <header className="sticky top-0 z-40 w-full border-b border-[#E1EAF2] bg-white/95 backdrop-blur-md">
-        <div className="w-full flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8 2xl:px-12">
+        <div className="w-full flex h-16 items-center justify-between gap-2 px-4 sm:px-6 lg:px-8 2xl:px-12">
           {/* Left: Official Brand Logo & Identity */}
-          <div className="flex items-center gap-3">
+          <div className="flex min-w-0 flex-1 items-center gap-3 lg:flex-none">
             {onToggleMobileSidebar && (
               <button
                 type="button"
                 onClick={onToggleMobileSidebar}
-                className="inline-flex lg:hidden items-center justify-center p-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
+                className="inline-flex shrink-0 lg:hidden items-center justify-center p-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
                 aria-label="Buka Navigasi Modul"
               >
                 <Menu className="w-5 h-5" />
               </button>
             )}
 
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-md p-0.5 bg-white border border-[#E1EAF2] shadow-2xs group-hover:border-[#1F70C1] transition-colors">
+            <Link href="/" className="group flex min-w-0 items-center gap-2 sm:gap-3">
+              <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-md border border-[#E1EAF2] bg-white p-0.5 shadow-2xs transition-colors group-hover:border-[#1F70C1] sm:h-11 sm:w-11">
                 <Image
                   src="/logo-if-itera.png"
                   alt="Logo Teknik Informatika ITERA"
                   fill
-                  sizes="44px"
+                  sizes="(max-width: 639px) 36px, 44px"
                   className="object-contain p-0.5"
                   priority
                 />
               </div>
 
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-extrabold uppercase tracking-wide text-[#1F70C1]">
+              <div className="flex min-w-0 flex-col sm:hidden">
+                <span className="truncate text-[9px] font-extrabold uppercase tracking-wide text-[#1F70C1]">
+                  Teknik Informatika ITERA
+                </span>
+                <span className="truncate text-[11px] font-bold leading-tight text-[#0D223A]">
+                  Praktikum PBO
+                </span>
+              </div>
+
+              <div className="hidden min-w-0 flex-col sm:flex">
+                <div className="flex min-w-0 items-center gap-2">
+                  <span className="truncate text-[11px] font-extrabold uppercase tracking-wide text-[#1F70C1]">
                     Teknik Informatika ITERA
                   </span>
-                  <span className="rounded bg-[#FEFBF3] border border-[#E8D9B5] px-1.5 py-0.2 text-[9px] font-bold text-[#8A6314]">
+                  <span className="shrink-0 rounded border border-[#E8D9B5] bg-[#FEFBF3] px-1.5 py-0.2 text-[9px] font-bold text-[#8A6314]">
                     2026/2027 Ganjil
                   </span>
                 </div>
-                <span className="text-sm font-bold text-[#0D223A] leading-tight">
+                <span className="truncate text-sm font-bold leading-tight text-[#0D223A]">
                   Praktikum Pemrograman Berorientasi Objek
                 </span>
               </div>
@@ -138,7 +147,7 @@ export default function Navbar({ onToggleMobileSidebar }: NavbarProps) {
           </nav>
 
           {/* Mobile hamburger menu */}
-          <div className="flex items-center gap-1 lg:hidden">
+          <div className="flex shrink-0 items-center gap-1 lg:hidden">
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}

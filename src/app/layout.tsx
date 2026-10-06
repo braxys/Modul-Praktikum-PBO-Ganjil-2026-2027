@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google';
 import 'highlight.js/styles/github-dark.css';
 import './globals.css';
 import CodeBlockClient from '@/components/CodeBlockClient';
+import { ModuleLockProvider } from '@/components/ModuleLockProvider';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -32,7 +33,9 @@ export default function RootLayout({
     <html lang="id" className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-[#F8FAFC] text-slate-900 selection:bg-blue-100 selection:text-blue-900">
         <CodeBlockClient />
-        {children}
+        <ModuleLockProvider>
+          {children}
+        </ModuleLockProvider>
       </body>
     </html>
   );
