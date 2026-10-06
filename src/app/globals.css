@@ -57,6 +57,15 @@ body {
   line-height: 1.75;
 }
 
+.prose-academic p > img {
+  display: block;
+  width: 100%;
+  max-width: 48rem;
+  height: auto;
+  margin-inline: auto;
+  border-radius: 0.5rem;
+}
+
 .prose-academic strong {
   color: #0D223A;
   font-weight: 700;

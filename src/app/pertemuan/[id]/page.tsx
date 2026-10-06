@@ -1,19 +1,17 @@
-import React from 'react';
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import type { Metadata } from 'next';
-import { getAllModules, getModuleBySlug } from '@/lib/modules';
-import { parseMarkdownToHtml } from '@/lib/markdown';
-import ModuleLayoutClient from '@/components/ModuleLayoutClient';
-import PrintButton from '@/components/PrintButton';
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import type { Metadata } from "next";
+import { getAllModules, getModuleBySlug } from "@/lib/modules";
+import { parseMarkdownToHtml } from "@/lib/markdown";
+import ModuleLayoutClient from "@/components/ModuleLayoutClient";
+import PrintButton from "@/components/PrintButton";
 import {
   ChevronRight,
-  BookOpen,
   ArrowLeft,
   ArrowRight,
   Clock,
   CheckCircle2,
-} from 'lucide-react';
+} from "lucide-react";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -26,13 +24,15 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { id } = await params;
   const mod = getModuleBySlug(id);
 
   if (!mod) {
     return {
-      title: 'Modul Tidak Ditemukan',
+      title: "Modul Tidak Ditemukan",
     };
   }
 
@@ -54,7 +54,10 @@ export default async function ModuleDetailPage({ params }: PageProps) {
   const htmlContent = await parseMarkdownToHtml(moduleData.content);
 
   return (
-    <ModuleLayoutClient modules={allModules} currentHeadings={moduleData.headings}>
+    <ModuleLayoutClient
+      modules={allModules}
+      currentHeadings={moduleData.headings}
+    >
       <article className="w-full space-y-8">
         {/* Breadcrumb Navigation */}
         <nav className="flex items-center gap-1.5 text-xs text-slate-500 no-print">
@@ -62,7 +65,10 @@ export default async function ModuleDetailPage({ params }: PageProps) {
             Beranda
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <Link href="/pertemuan/1" className="hover:text-[#1F70C1] transition-colors">
+          <Link
+            href="/pertemuan/1"
+            className="hover:text-[#1F70C1] transition-colors"
+          >
             Modul Praktikum
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
@@ -142,7 +148,8 @@ export default async function ModuleDetailPage({ params }: PageProps) {
                 <span>Pertemuan Sebelumnya</span>
               </span>
               <span className="mt-1 text-sm font-semibold text-[#0D223A] group-hover:text-[#1F70C1] line-clamp-1">
-                Pertemuan {moduleData.prevModule.id}: {moduleData.prevModule.title}
+                Pertemuan {moduleData.prevModule.id}:{" "}
+                {moduleData.prevModule.title}
               </span>
             </Link>
           ) : (
@@ -159,7 +166,8 @@ export default async function ModuleDetailPage({ params }: PageProps) {
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
               </span>
               <span className="mt-1 text-sm font-semibold text-[#0D223A] group-hover:text-[#1F70C1] line-clamp-1">
-                Pertemuan {moduleData.nextModule.id}: {moduleData.nextModule.title}
+                Pertemuan {moduleData.nextModule.id}:{" "}
+                {moduleData.nextModule.title}
               </span>
             </Link>
           ) : (

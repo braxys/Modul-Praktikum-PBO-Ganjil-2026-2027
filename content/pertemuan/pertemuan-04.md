@@ -105,7 +105,7 @@ Karena `GoldenRetriever` adalah turunan dari `Anjing`, maka class ini mewarisi s
 
 Untuk mempermudah memahami hubungan antara class induk dan class turunan, perhatikan ilustrasi berikut.
 
-<!-- GAMBAR 4.1: ganti dengan gambar asli dari PDF (simpan di public/images/pbo/gambar-4-1.png) -->
+![Gambar 4.1 Konsep Inheritance dalam Pemrograman Java](/images/pbo/gambar-4-1.png)
 
 **Gambar 4.1 Konsep Inheritance (Pewarisan) dalam Pemrograman Java**
 

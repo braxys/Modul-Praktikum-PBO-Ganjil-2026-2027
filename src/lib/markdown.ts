@@ -96,6 +96,12 @@ export async function parseMarkdownToHtml(markdown: string): Promise<string> {
   // Strip duplicate top-level '# PERTEMUAN X' heading since it's already shown in the page header
   let processed = markdown.replace(/^#\s+PERTEMUAN\s+\d+\s*[-—]\s*.*$/m, '').trim();
 
+  processed = processed.replace(
+    /<!--\s*GAMBAR\s+(\d+\.\d+):.*?simpan di public\/images\/pbo\/(gambar-\d+-\d+\.png).*?-->/g,
+    (_match, figureNumber: string, imageFile: string) =>
+      `![Gambar ${figureNumber}](/images/pbo/${imageFile})`,
+  );
+
   // Pre-process special markers like [LATIHAN MANDIRI] into styled callout blocks
   processed = processed.replace(
     /\*\*\[LATIHAN MANDIRI\]\*\*([\s\S]*?)(?=\n## |\n# |$)/g,
