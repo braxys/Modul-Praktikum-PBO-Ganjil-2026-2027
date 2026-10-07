@@ -180,7 +180,7 @@ export default function HomePage() {
                     <p className="mt-0.5 text-slate-500">
                       Gunakan JDK 21 LTS atau JDK 25. Verifikasi via terminal:
                     </p>
-                    <pre className="mt-1.5 p-2.5 rounded bg-[#0D223A] text-slate-100 font-mono text-[11px]">
+                    <pre className="mt-1.5 p-2.5 rounded border border-[#9BC5E8] bg-[#EAF3FC] text-[#0D223A] font-mono text-[11px]">
                       java -version
                     </pre>
                   </div>

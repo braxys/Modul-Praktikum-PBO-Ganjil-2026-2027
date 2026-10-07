@@ -53,15 +53,15 @@ renderer.code = function ({ text, lang }) {
   const escapedForData = encodeURIComponent(text);
 
   return `
-    <div class="my-6 rounded-lg border border-slate-700 bg-[#0d131f] overflow-hidden shadow-sm font-mono text-sm leading-relaxed">
-      <div class="flex items-center justify-between px-4 py-2 border-b border-slate-800 bg-[#121c2d] text-xs text-slate-300">
+    <div class="my-6 rounded-lg border border-[#9BC5E8] bg-[#EAF3FC] overflow-hidden shadow-sm font-mono text-sm leading-relaxed">
+      <div class="flex items-center justify-between px-4 py-2 border-b border-[#B8D4EE] bg-[#DCEBFA] text-xs text-[#133863]">
         <div class="flex items-center gap-2">
           <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#1F70C1]"></span>
-          <span class="font-semibold tracking-wider text-slate-300 text-[11px] uppercase">${displayLang}</span>
+          <span class="font-semibold tracking-wider text-[#133863] text-[11px] uppercase">${displayLang}</span>
         </div>
         <button 
           type="button"
-          class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-800 hover:bg-[#1F70C1] text-slate-200 hover:text-white transition-colors cursor-pointer text-xs"
+          class="copy-code-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#1F70C1] hover:bg-[#165696] text-white transition-colors cursor-pointer text-xs"
           data-code="${escapedForData}"
           aria-label="Salin Kode"
         >
@@ -72,7 +72,7 @@ renderer.code = function ({ text, lang }) {
           <span class="btn-text">Salin</span>
         </button>
       </div>
-      <pre class="p-4 overflow-x-auto text-[13.5px] leading-6 text-slate-100 font-mono"><code class="hljs language-${language}">${highlighted}</code></pre>
+      <pre class="p-4 overflow-x-auto text-[13.5px] leading-6 text-[#0D223A] font-mono bg-[#F8FBFE]"><code class="hljs language-${language}">${highlighted}</code></pre>
     </div>
   `;
 };

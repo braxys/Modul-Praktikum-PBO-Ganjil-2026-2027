@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
-import 'highlight.js/styles/github-dark.css';
+import 'highlight.js/styles/github.css';
 import './globals.css';
 import CodeBlockClient from '@/components/CodeBlockClient';
 import { ModuleLockProvider } from '@/components/ModuleLockProvider';
